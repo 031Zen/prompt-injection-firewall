@@ -6,6 +6,7 @@ app.py
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from not_sandboxed import config
@@ -221,6 +222,13 @@ def build_arena(
     every verdict names the rule that produced it
     """
     app = FastAPI(title = "not-sandboxed arena")
+    app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://031zen.github.io"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
     sessions = store or SessionStore()
     log = audit or audit_log_from_env(config.ARENA_AUDIT_PATH_VAR)
     won = bypasses or bypass_log_from_env(config.ARENA_BYPASS_PATH_VAR)
