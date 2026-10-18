@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
   const isDev = mode === 'development'
 
   return {
+    base: '/prompt-injection-firewall/',
     plugins: [react(), tsconfigPaths()],
 
     resolve: {
